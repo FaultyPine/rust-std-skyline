@@ -180,6 +180,9 @@ impl FileDesc {
     }
 
     pub fn duplicate(&self) -> io::Result<FileDesc> {
+        // XXX: do not upstream
+        let new_fd = FileDesc::new(self.raw());
+        return Ok(new_fd);
         // We want to atomically duplicate this file descriptor and set the
         // CLOEXEC flag, and currently that's done via F_DUPFD_CLOEXEC. This
         // flag, however, isn't supported on older Linux kernels (earlier than
